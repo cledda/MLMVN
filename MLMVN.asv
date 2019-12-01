@@ -52,8 +52,6 @@ SoftMargins = -1;
 %an mlmvnWindow and gives the handle of the mlmvnWindow
 figureHandle = -1;
 
-maxIterations = 5000;
-
 %HAVEN'T DONE THIS ONE COMPLETELY BUT NECESSARY FOR CORRECTION OF WIEGHTS -
 %VALUE 'learningRate' IS DESCRIBED ON PG. 5 BELOW EQUATIONS (12) AND (13)
 learningRate = 0;
@@ -79,7 +77,7 @@ acceptableInitialWeightsValues = ...
 
 %using variable 'givenInputs' to determine which values were passed to the
 %function
-givenInputs(1:15) = false;
+givenInputs(1:14) = false;
 
 
 % *** GATHERING INPUT FROM INPUT ARGUMENT 'varargin'
@@ -138,9 +136,6 @@ for c1 = 1:2:len
 		case 'figurehandle'
 			figureHandle = varargin{c1+1};
 			givenInputs(14) = true;
-        case 'maxiterations'
-            maxIterations = varargin{c1+1};
-            givenInputs(15) = true;
     end% of the switch
 
 end% of for loop
@@ -789,7 +784,7 @@ if SoftMargins && desiredAlgo == 1
 		%% ANGULAR RMSE ALGORITHM
 		finishedLearning = false;
 		
-		while ~finishedLearning && iterations < maxIterations
+		while ~finishedLearning
 			%% CALCULATING SAMPLE OUTPUT
 			iterations=iterations+1; % iterations counter
             ErrorCounter=0; % initialization of the error counter on the iteration 
@@ -924,15 +919,14 @@ if SoftMargins && desiredAlgo == 1
             ErrorCounter=nnz(maxOutputError);
             fprintf('Iter %5d  Errors %5d  Angular RMSE %6.4f\n', iterations, ErrorCounter, AngularRMSE);
             
-            ErrorCounter=0;% reset of counter of the samples required learning on the current iteration
-            
+            ErrorCounter=0; % reset of counter of the samples required learning on the current iteration
 			%% END OF NET ERROR CALCULATION
 			
 			%% LEARNING / MODIFICATION OF WEIGHTS
 			% if the algorithm has not finished learning then output of the
 			% network needs to be calculated again to start correction of
 			% errors
-            
+            numIterations=0;
             
 			if ~finishedLearning
 				
