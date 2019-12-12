@@ -617,7 +617,7 @@ networkOutputs(1:numberOfInputSamples,1:numberOfOutputs) = 0;
 if SoftMargins
 	networkAngleOutputs = networkOutputs;
 end
-% preallocating a matrix for correction of those errors, which  jump over
+% preallocatiFng a matrix for correction of those errors, which  jump over
 % pi (or half of the number of sectors)
 mask = networkOutputs;
 [n1,n2] = size(mask);
